@@ -1,14 +1,14 @@
-# blancoValueObjectKt
+# blancoTypeReferenceKt
 
-このプロジェクトはblancoValueObjectの上田オリジナル版です。
+このプロジェクトはblancoTypeReferenceの上田オリジナル版です。
 
-blancoValueObject は「バリューオブジェクト定義書」というExcel様式を記入するだけで 簡単に バリューオブジェクトのJavaクラスが作成できるようにするためのツールです。
+blancoTypeReference は blancoValueObject で使用する「バリューオブジェクト定義書」と、blancoRestGenerator で使用する「電文定義書」というExcel様式の定義書で定義されたバリューオブジェクトから、TypeReference を生成します。
 
- 1.ごく普通の バリューオブジェクトのためのソースコードを生成します。
+ 1.TypeReference はごく普通の Map データとして生成され、JSON を deserialize する際などに使用する想定です。
  2.生成後のソースコードは それ単独で動作することができます。余計な *.jarファイルなどの実行時ライブラリを一切必要としません。
  3.導入すると、ドキュメントとソースコードが必ず一致するという効果があります。
 
-いまのところblancoValueObjectKtは本家にはありません。
+いまのところblancoTypeReferenceKtは本家にはありません。
 
 ## maven 対応について
 

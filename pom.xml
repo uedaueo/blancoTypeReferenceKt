@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>blanco.valueobjectkt</groupId>
-	<artifactId>blanco-valueobjectkt</artifactId>
+	<groupId>blanco.typereferencekt</groupId>
+	<artifactId>blanco-typereferencekt</artifactId>
 	<packaging>jar</packaging>
-	<version>3.0.15</version>
-	<name>blanco-valueobject-kt</name>
+	<version>3.0.1</version>
+	<name>blanco-typereference-kt</name>
 	<url>https://igapyon.github.io/blancofw-maven2</url>
 
 	<!-- basic spec for jar -->
