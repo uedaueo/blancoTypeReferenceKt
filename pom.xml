@@ -61,8 +61,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>blanco.commons.io</groupId>
-			<artifactId>blanco-commons</artifactId>
+			<groupId>blanco.restgeneratorkt</groupId>
+			<artifactId>blanco-restgeneratorkt</artifactId>
 			<version>[3.0,4.0)</version>
 		</dependency>
 
