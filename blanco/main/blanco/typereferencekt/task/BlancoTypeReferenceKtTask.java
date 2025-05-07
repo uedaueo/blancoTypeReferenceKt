@@ -79,6 +79,11 @@ public class BlancoTypeReferenceKtTask extends Task {
     protected boolean fIsFieldClassNameProcessed = false;
 
     /**
+     * フィールド [mapName] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldMapNameProcessed = false;
+
+    /**
      * フィールド [mapKeyType] に値がセットされたかどうか。
      */
     protected boolean fIsFieldMapKeyTypeProcessed = false;
@@ -371,9 +376,35 @@ public class BlancoTypeReferenceKtTask extends Task {
     }
 
     /**
-     * Antタスクの[mapKeyType]アトリビュートのセッターメソッド。
+     * Antタスクの[mapName]アトリビュートのセッターメソッド。
      *
      * 項目番号: 11<br>
+     * TypeReference 定義のクラス名を指定します。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setMapName(final String arg) {
+        fInput.setMapName(arg);
+        fIsFieldMapNameProcessed = true;
+    }
+
+    /**
+     * Antタスクの[mapName]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 11<br>
+     * TypeReference 定義のクラス名を指定します。<br>
+     * デフォルト値[BlancoTypeReferenceMap]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getMapName() {
+        return fInput.getMapName();
+    }
+
+    /**
+     * Antタスクの[mapKeyType]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 12<br>
      * string または class を指定します。<br>
      *
      * @param arg セットしたい値
@@ -386,9 +417,9 @@ public class BlancoTypeReferenceKtTask extends Task {
     /**
      * Antタスクの[mapKeyType]アトリビュートのゲッターメソッド。
      *
-     * 項目番号: 11<br>
+     * 項目番号: 12<br>
      * string または class を指定します。<br>
-     * デフォルト値[string]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
+     * デフォルト値[class]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
      *
      * @return このフィールドの値
      */
@@ -399,7 +430,7 @@ public class BlancoTypeReferenceKtTask extends Task {
     /**
      * Antタスクの[valueObjectMetadirs]アトリビュートのセッターメソッド。
      *
-     * 項目番号: 12<br>
+     * 項目番号: 13<br>
      * valueObjectのmetaディレクトリを指定します。複数ある場合はカンマで区切ります。<br>
      *
      * @param arg セットしたい値
@@ -412,7 +443,7 @@ public class BlancoTypeReferenceKtTask extends Task {
     /**
      * Antタスクの[valueObjectMetadirs]アトリビュートのゲッターメソッド。
      *
-     * 項目番号: 12<br>
+     * 項目番号: 13<br>
      * valueObjectのmetaディレクトリを指定します。複数ある場合はカンマで区切ります。<br>
      *
      * @return このフィールドの値
@@ -424,7 +455,7 @@ public class BlancoTypeReferenceKtTask extends Task {
     /**
      * Antタスクの[restgeneratorMetadirs]アトリビュートのセッターメソッド。
      *
-     * 項目番号: 13<br>
+     * 項目番号: 14<br>
      * restgeneratorのmetaディレクトリを指定します。複数ある場合はカンマで区切ります。<br>
      *
      * @param arg セットしたい値
@@ -437,7 +468,7 @@ public class BlancoTypeReferenceKtTask extends Task {
     /**
      * Antタスクの[restgeneratorMetadirs]アトリビュートのゲッターメソッド。
      *
-     * 項目番号: 13<br>
+     * 項目番号: 14<br>
      * restgeneratorのmetaディレクトリを指定します。複数ある場合はカンマで区切ります。<br>
      *
      * @return このフィールドの値
@@ -472,6 +503,7 @@ public class BlancoTypeReferenceKtTask extends Task {
             System.out.println("- lineSeparator:[" + getLineSeparator() + "]");
             System.out.println("- packageName:[" + getPackageName() + "]");
             System.out.println("- className:[" + getClassName() + "]");
+            System.out.println("- mapName:[" + getMapName() + "]");
             System.out.println("- mapKeyType:[" + getMapKeyType() + "]");
             System.out.println("- valueObjectMetadirs:[" + getValueObjectMetadirs() + "]");
             System.out.println("- restgeneratorMetadirs:[" + getRestgeneratorMetadirs() + "]");

@@ -91,12 +91,20 @@ public class BlancoTypeReferenceKtProcessInput {
     private String fClassName = "BlancoTypeReference";
 
     /**
+     * TypeReference 定義のクラス名を指定します。
+     *
+     * フィールド: [mapName]。
+     * デフォルト: [BlancoTypeReferenceMap]。
+     */
+    private String fMapName = "BlancoTypeReferenceMap";
+
+    /**
      * string または class を指定します。
      *
      * フィールド: [mapKeyType]。
-     * デフォルト: [string]。
+     * デフォルト: [class]。
      */
-    private String fMapKeyType = "string";
+    private String fMapKeyType = "class";
 
     /**
      * valueObjectのmetaディレクトリを指定します。複数ある場合はカンマで区切ります。
@@ -364,6 +372,29 @@ public class BlancoTypeReferenceKtProcessInput {
     }
 
     /**
+     * フィールド [mapName] の値を設定します。
+     *
+     * フィールドの説明: [TypeReference 定義のクラス名を指定します。]。
+     *
+     * @param argMapName フィールド[mapName]に設定する値。
+     */
+    public void setMapName(final String argMapName) {
+        fMapName = argMapName;
+    }
+
+    /**
+     * フィールド [mapName] の値を取得します。
+     *
+     * フィールドの説明: [TypeReference 定義のクラス名を指定します。]。
+     * デフォルト: [BlancoTypeReferenceMap]。
+     *
+     * @return フィールド[mapName]から取得した値。
+     */
+    public String getMapName() {
+        return fMapName;
+    }
+
+    /**
      * フィールド [mapKeyType] の値を設定します。
      *
      * フィールドの説明: [string または class を指定します。]。
@@ -378,7 +409,7 @@ public class BlancoTypeReferenceKtProcessInput {
      * フィールド [mapKeyType] の値を取得します。
      *
      * フィールドの説明: [string または class を指定します。]。
-     * デフォルト: [string]。
+     * デフォルト: [class]。
      *
      * @return フィールド[mapKeyType]から取得した値。
      */
@@ -456,6 +487,7 @@ public class BlancoTypeReferenceKtProcessInput {
         buf.append(",lineSeparator=" + fLineSeparator);
         buf.append(",packageName=" + fPackageName);
         buf.append(",className=" + fClassName);
+        buf.append(",mapName=" + fMapName);
         buf.append(",mapKeyType=" + fMapKeyType);
         buf.append(",valueObjectMetadirs=" + fValueObjectMetadirs);
         buf.append(",restgeneratorMetadirs=" + fRestgeneratorMetadirs);
@@ -514,6 +546,9 @@ public class BlancoTypeReferenceKtProcessInput {
         // Name: fClassName
         // Type: java.lang.String
         target.fClassName = this.fClassName;
+        // Name: fMapName
+        // Type: java.lang.String
+        target.fMapName = this.fMapName;
         // Name: fMapKeyType
         // Type: java.lang.String
         target.fMapKeyType = this.fMapKeyType;

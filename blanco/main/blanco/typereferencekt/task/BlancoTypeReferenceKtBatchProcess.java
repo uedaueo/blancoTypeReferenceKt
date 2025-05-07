@@ -73,6 +73,8 @@ public class BlancoTypeReferenceKtBatchProcess {
                 input.setPackageName(arg.substring(13));
             } else if (arg.startsWith("-className=")) {
                 input.setClassName(arg.substring(11));
+            } else if (arg.startsWith("-mapName=")) {
+                input.setMapName(arg.substring(9));
             } else if (arg.startsWith("-mapKeyType=")) {
                 input.setMapKeyType(arg.substring(12));
             } else if (arg.startsWith("-valueObjectMetadirs=")) {
@@ -172,7 +174,7 @@ public class BlancoTypeReferenceKtBatchProcess {
      */
     public static final void usage() {
         System.out.println("BlancoTypeReferenceKtBatchProcess: Usage:");
-        System.out.println("  java blanco.typereferencekt.task.BlancoTypeReferenceKtBatchProcess -verbose=value1 -metadir=value2 -targetdir=value3 -tmpdir=value4 -encoding=value5 -xmlrootelement=value6 -sheetType=value7 -targetStyle=value8 -lineSeparator=value9 -packageName=value10 -className=value11 -mapKeyType=value12 -valueObjectMetadirs=value13 -restgeneratorMetadirs=value14");
+        System.out.println("  java blanco.typereferencekt.task.BlancoTypeReferenceKtBatchProcess -verbose=value1 -metadir=value2 -targetdir=value3 -tmpdir=value4 -encoding=value5 -xmlrootelement=value6 -sheetType=value7 -targetStyle=value8 -lineSeparator=value9 -packageName=value10 -className=value11 -mapName=value12 -mapKeyType=value13 -valueObjectMetadirs=value14 -restgeneratorMetadirs=value15");
         System.out.println("    -verbose");
         System.out.println("      explanation[Whether to run in verbose mode.]");
         System.out.println("      type[boolean]");
@@ -216,10 +218,14 @@ public class BlancoTypeReferenceKtBatchProcess {
         System.out.println("      explanation[TypeReference 定義のクラス名を指定します。]");
         System.out.println("      type[string]");
         System.out.println("      default value[BlancoTypeReference]");
+        System.out.println("    -mapName");
+        System.out.println("      explanation[TypeReference 定義のクラス名を指定します。]");
+        System.out.println("      type[string]");
+        System.out.println("      default value[BlancoTypeReferenceMap]");
         System.out.println("    -mapKeyType");
         System.out.println("      explanation[string または class を指定します。]");
         System.out.println("      type[string]");
-        System.out.println("      default value[string]");
+        System.out.println("      default value[class]");
         System.out.println("    -valueObjectMetadirs");
         System.out.println("      explanation[valueObjectのmetaディレクトリを指定します。複数ある場合はカンマで区切ります。]");
         System.out.println("      type[string]");

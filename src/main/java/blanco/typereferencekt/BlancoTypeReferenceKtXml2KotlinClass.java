@@ -341,6 +341,11 @@ public class BlancoTypeReferenceKtXml2KotlinClass {
         defaultValue.append(")");
         field.setDefault(defaultValue.toString());
 
+        // import TypeReference class.
+        fCgSourceFile.getImportList().add(
+                BlancoTypeReferenceKtUtil.packageName + "." + BlancoTypeReferenceKtUtil.typeRefereceClassName
+        );
+
         // Auto-generates the actual source code based on the collected information.
         BlancoCgTransformerFactory.getKotlinSourceTransformer().transform(
                 fCgSourceFile, fileBlancoMain);
@@ -490,7 +495,7 @@ public class BlancoTypeReferenceKtXml2KotlinClass {
         fCgSourceFile = fCgFactory.createSourceFile(myPackage, null);
         fCgSourceFile.setEncoding(fEncoding);
 
-        String mapClassName = BlancoTypeReferenceKtUtil.typeRefereceClassName + BlancoTypeReferenceKtUtil.mapClassSuffix;
+        String mapClassName = BlancoTypeReferenceKtUtil.typeRefereceClassName + BlancoTypeReferenceKtUtil.typeReferenceMapSuffix;
         fCgClass = fCgFactory.createClass(mapClassName, "TypeReference Map Class");
         fCgSourceFile.getClassList().add(fCgClass);
         fCgClass.setNoClassDeclare(true);

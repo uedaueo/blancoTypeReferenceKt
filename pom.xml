@@ -5,7 +5,7 @@
 	<groupId>blanco.typereferencekt</groupId>
 	<artifactId>blanco-typereferencekt</artifactId>
 	<packaging>jar</packaging>
-	<version>3.0.1</version>
+	<version>3.0.2</version>
 	<name>blanco-typereference-kt</name>
 	<url>https://igapyon.github.io/blancofw-maven2</url>
 
