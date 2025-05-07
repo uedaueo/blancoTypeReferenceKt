@@ -99,6 +99,36 @@ public class BlancoTypeReferenceKtTask extends Task {
     protected boolean fIsFieldRestgeneratorMetadirsProcessed = false;
 
     /**
+     * フィールド [searchTmpdir] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldSearchTmpdirProcessed = false;
+
+    /**
+     * フィールド [voPackageSuffix] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldVoPackageSuffixProcessed = false;
+
+    /**
+     * フィールド [voOverridePackage] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldVoOverridePackageProcessed = false;
+
+    /**
+     * フィールド [restPackageSuffix] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldRestPackageSuffixProcessed = false;
+
+    /**
+     * フィールド [restOverridePackage] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldRestOverridePackageProcessed = false;
+
+    /**
+     * フィールド [restOverrideLocation] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldRestOverrideLocationProcessed = false;
+
+    /**
      * verboseモードで動作させるかどうか。
      *
      * @param arg verboseモードで動作させるかどうか。
@@ -478,6 +508,157 @@ public class BlancoTypeReferenceKtTask extends Task {
     }
 
     /**
+     * Antタスクの[searchTmpdir]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 15<br>
+     * import文作成のために検索するtmpディレクトリをカンマ区切りで指定します。指定ディレクトリ直下のvalueobjectディレクトリとrestgenratorディレクトリの下にxmlを探しにいきます。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setSearchTmpdir(final String arg) {
+        fInput.setSearchTmpdir(arg);
+        fIsFieldSearchTmpdirProcessed = true;
+    }
+
+    /**
+     * Antタスクの[searchTmpdir]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 15<br>
+     * import文作成のために検索するtmpディレクトリをカンマ区切りで指定します。指定ディレクトリ直下のvalueobjectディレクトリとrestgenratorディレクトリの下にxmlを探しにいきます。<br>
+     * デフォルト値[tmp]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getSearchTmpdir() {
+        return fInput.getSearchTmpdir();
+    }
+
+    /**
+     * Antタスクの[voPackageSuffix]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 16<br>
+     * packageを探しにいくValueObject定義書を処理する際に指定されていたはずの packageSuffix を指定します。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setVoPackageSuffix(final String arg) {
+        fInput.setVoPackageSuffix(arg);
+        fIsFieldVoPackageSuffixProcessed = true;
+    }
+
+    /**
+     * Antタスクの[voPackageSuffix]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 16<br>
+     * packageを探しにいくValueObject定義書を処理する際に指定されていたはずの packageSuffix を指定します。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getVoPackageSuffix() {
+        return fInput.getVoPackageSuffix();
+    }
+
+    /**
+     * Antタスクの[voOverridePackage]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 17<br>
+     * packageを探しにいくValueObject定義書を処理する際に指定されていたはずの overridePackage を指定します。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setVoOverridePackage(final String arg) {
+        fInput.setVoOverridePackage(arg);
+        fIsFieldVoOverridePackageProcessed = true;
+    }
+
+    /**
+     * Antタスクの[voOverridePackage]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 17<br>
+     * packageを探しにいくValueObject定義書を処理する際に指定されていたはずの overridePackage を指定します。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getVoOverridePackage() {
+        return fInput.getVoOverridePackage();
+    }
+
+    /**
+     * Antタスクの[restPackageSuffix]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 18<br>
+     * API定義書で指定されたパッケージ名の後ろに追加するパッケージ文字列を指定します。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setRestPackageSuffix(final String arg) {
+        fInput.setRestPackageSuffix(arg);
+        fIsFieldRestPackageSuffixProcessed = true;
+    }
+
+    /**
+     * Antタスクの[restPackageSuffix]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 18<br>
+     * API定義書で指定されたパッケージ名の後ろに追加するパッケージ文字列を指定します。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getRestPackageSuffix() {
+        return fInput.getRestPackageSuffix();
+    }
+
+    /**
+     * Antタスクの[restOverridePackage]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 19<br>
+     * API定義書で指定されたパッケージ名を上書きします。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setRestOverridePackage(final String arg) {
+        fInput.setRestOverridePackage(arg);
+        fIsFieldRestOverridePackageProcessed = true;
+    }
+
+    /**
+     * Antタスクの[restOverridePackage]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 19<br>
+     * API定義書で指定されたパッケージ名を上書きします。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getRestOverridePackage() {
+        return fInput.getRestOverridePackage();
+    }
+
+    /**
+     * Antタスクの[restOverrideLocation]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 20<br>
+     * API定義書で指定されたロケーション名を上書きします。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setRestOverrideLocation(final String arg) {
+        fInput.setRestOverrideLocation(arg);
+        fIsFieldRestOverrideLocationProcessed = true;
+    }
+
+    /**
+     * Antタスクの[restOverrideLocation]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 20<br>
+     * API定義書で指定されたロケーション名を上書きします。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getRestOverrideLocation() {
+        return fInput.getRestOverrideLocation();
+    }
+
+    /**
      * Antタスクのメイン処理。Apache Antから このメソッドが呼び出されます。
      *
      * @throws BuildException タスクとしての例外が発生した場合。
@@ -507,6 +688,12 @@ public class BlancoTypeReferenceKtTask extends Task {
             System.out.println("- mapKeyType:[" + getMapKeyType() + "]");
             System.out.println("- valueObjectMetadirs:[" + getValueObjectMetadirs() + "]");
             System.out.println("- restgeneratorMetadirs:[" + getRestgeneratorMetadirs() + "]");
+            System.out.println("- searchTmpdir:[" + getSearchTmpdir() + "]");
+            System.out.println("- voPackageSuffix:[" + getVoPackageSuffix() + "]");
+            System.out.println("- voOverridePackage:[" + getVoOverridePackage() + "]");
+            System.out.println("- restPackageSuffix:[" + getRestPackageSuffix() + "]");
+            System.out.println("- restOverridePackage:[" + getRestOverridePackage() + "]");
+            System.out.println("- restOverrideLocation:[" + getRestOverrideLocation() + "]");
         }
 
         try {

@@ -12,6 +12,7 @@ package blanco.typereferencekt;
 import blanco.cg.BlancoCgSupportedLang;
 import blanco.commons.util.BlancoNameUtil;
 import blanco.commons.util.BlancoStringUtil;
+import blanco.restgeneratorkt.BlancoRestGeneratorKtUtil;
 import blanco.restgeneratorkt.BlancoRestGeneratorKtXmlParser;
 import blanco.restgeneratorkt.valueobject.BlancoRestGeneratorKtTelegramFieldStructure;
 import blanco.restgeneratorkt.valueobject.BlancoRestGeneratorKtTelegramProcessStructure;
@@ -51,24 +52,6 @@ public class BlancoTypeReferenceKtXmlParser {
         return fVerbose;
     }
 
-    /*
-     * Settings for overriding package names.
-     */
-    private String fPackageSuffix = "";
-    public void setPackageSuffix(String suffix) {
-        this.fPackageSuffix = suffix;
-    }
-    public String getPackageSuffix() {
-        return this.fPackageSuffix;
-    }
-    private String fOverridePackage = "";
-    public void setOverridePackage(String overridePackage) {
-        this.fOverridePackage = overridePackage;
-    }
-    public String getOverridePackage() {
-        return this.fOverridePackage;
-    }
-
     /**
      * Parses an XML document in an intermediate XML file to get an array of value object information.
      *
@@ -87,8 +70,8 @@ public class BlancoTypeReferenceKtXmlParser {
         // valueobject parser
         BlancoValueObjectKtXmlParser voParser = new BlancoValueObjectKtXmlParser();
         voParser.setVerbose(this.isVerbose());
-        voParser.setPackageSuffix(this.fPackageSuffix);
-        voParser.setOverridePackage(this.fOverridePackage);
+        voParser.setPackageSuffix(BlancoTypeReferenceKtUtil.voPackageSuffix);
+        voParser.setOverridePackage(BlancoTypeReferenceKtUtil.voPackageOverride);
 
         for (int index = 0; index < argVoMetaXmlSourceFiles.length; index++) {
             if (argVoMetaXmlSourceFiles[index].getName().endsWith(".xml") == false) {
@@ -96,6 +79,18 @@ public class BlancoTypeReferenceKtXmlParser {
             }
             BlancoValueObjectKtClassStructure[] structures = voParser.parse(argVoMetaXmlSourceFiles[index]);
             structureList.addAll(this.parseVoStructures(structures));
+
+            // Replaces the package name if the Replace option is specified.
+            // If Suffix is present, it takes precedence.
+            for (BlancoValueObjectKtClassStructure structure : structures) {
+                String myPackage = structure.getPackage();
+                if (structure.getPackageSuffix() != null && structure.getPackageSuffix().length() > 0) {
+                    myPackage = myPackage + "." + structure.getPackageSuffix();
+                } else if (structure.getOverridePackage() != null && structure.getOverridePackage().length() > 0) {
+                    myPackage = structure.getOverridePackage();
+                }
+                structure.setPackage(myPackage);
+            }
         }
 
         // restgenerator parser
@@ -104,6 +99,10 @@ public class BlancoTypeReferenceKtXmlParser {
         restParser.setCreateServiceMethod(false);
         restParser.setServerType("micronaut");
         restParser.setTelegramPackage("blanco.restgenerator.valueobject");
+        BlancoRestGeneratorKtUtil.packageSuffix = BlancoTypeReferenceKtUtil.restPackageSuffix;
+        BlancoRestGeneratorKtUtil.overridePackage = BlancoTypeReferenceKtUtil.restPackageOverride;
+        BlancoRestGeneratorKtUtil.voPackageSuffix = BlancoTypeReferenceKtUtil.voPackageSuffix;
+        BlancoRestGeneratorKtUtil.voOverridePackage = BlancoTypeReferenceKtUtil.restPackageOverride;
 
         for (int index = 0; index < argRestMetaXmlSourceFiles.length; index++) {
             if (argRestMetaXmlSourceFiles[index].getName().endsWith(".xml") == false) {
@@ -175,6 +174,8 @@ public class BlancoTypeReferenceKtXmlParser {
 
                    structure.setName(tmpStructure.getName());
                    structure.setPackage(tmpStructure.getPackage());
+                   structure.setPackageSuffix(tmpStructure.getPackageSuffix());
+                   structure.setOverridePackage(tmpStructure.getOverridePackage());
                    structure.setGeneric(tmpStructure.getGeneric());
                    structure.setVirtualParams(tmpStructure.getVirtualParams());
                    structure.setAnnotationList(tmpStructure.getAnnotationList());
@@ -186,6 +187,16 @@ public class BlancoTypeReferenceKtXmlParser {
                    structure.setGenerateToString(false);
                    structure.setAdjustFieldName(tmpStructure.getAdjustFieldName());
                    structure.setAdjustDefaultValue(false);
+
+                   // Replaces the package name if the replace package name option is specified.
+                   // If there is Suffix, that is the priority.
+                   String myPackage = structure.getPackage();
+                   if (structure.getPackageSuffix() != null && structure.getPackageSuffix().length() > 0) {
+                       myPackage = myPackage + "." + structure.getPackageSuffix();
+                   } else if (structure.getOverridePackage() != null && structure.getOverridePackage().length() > 0) {
+                       myPackage = structure.getOverridePackage();
+                   }
+                   structure.setPackage(myPackage);
 
                    if (!BlancoStringUtil.null2Blank(tmpStructure.getExtends()).trim().isEmpty()) {
                        BlancoValueObjectKtExtendsStructure extendsStructure = new BlancoValueObjectKtExtendsStructure();

@@ -94,6 +94,10 @@ public class BlancoTypeReferenceKtProcessImpl implements BlancoTypeReferenceKtPr
                 System.out.println("TARGETDIR = " + strTarget);
             }
 
+            BlancoTypeReferenceKtUtil.voPackageSuffix = input.getVoPackageSuffix();
+            BlancoTypeReferenceKtUtil.voPackageOverride = input.getVoOverridePackage();
+            BlancoTypeReferenceKtUtil.restPackageSuffix = input.getRestPackageSuffix();
+            BlancoTypeReferenceKtUtil.restPackageOverride = input.getRestOverridePackage();
             BlancoTypeReferenceKtUtil.packageName = input.getPackageName();
             BlancoTypeReferenceKtUtil.typeRefereceClassName = input.getClassName();
 

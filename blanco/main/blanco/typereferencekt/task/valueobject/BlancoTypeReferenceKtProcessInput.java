@@ -121,6 +121,49 @@ public class BlancoTypeReferenceKtProcessInput {
     private String fRestgeneratorMetadirs;
 
     /**
+     * import文作成のために検索するtmpディレクトリをカンマ区切りで指定します。指定ディレクトリ直下のvalueobjectディレクトリとrestgenratorディレクトリの下にxmlを探しにいきます。
+     *
+     * フィールド: [searchTmpdir]。
+     * デフォルト: [tmp]。
+     */
+    private String fSearchTmpdir = "tmp";
+
+    /**
+     * packageを探しにいくValueObject定義書を処理する際に指定されていたはずの packageSuffix を指定します。
+     *
+     * フィールド: [voPackageSuffix]。
+     */
+    private String fVoPackageSuffix;
+
+    /**
+     * packageを探しにいくValueObject定義書を処理する際に指定されていたはずの overridePackage を指定します。
+     *
+     * フィールド: [voOverridePackage]。
+     */
+    private String fVoOverridePackage;
+
+    /**
+     * API定義書で指定されたパッケージ名の後ろに追加するパッケージ文字列を指定します。
+     *
+     * フィールド: [restPackageSuffix]。
+     */
+    private String fRestPackageSuffix;
+
+    /**
+     * API定義書で指定されたパッケージ名を上書きします。
+     *
+     * フィールド: [restOverridePackage]。
+     */
+    private String fRestOverridePackage;
+
+    /**
+     * API定義書で指定されたロケーション名を上書きします。
+     *
+     * フィールド: [restOverrideLocation]。
+     */
+    private String fRestOverrideLocation;
+
+    /**
      * フィールド [verbose] の値を設定します。
      *
      * フィールドの説明: [Whether to run in verbose mode.]。
@@ -462,6 +505,139 @@ public class BlancoTypeReferenceKtProcessInput {
     }
 
     /**
+     * フィールド [searchTmpdir] の値を設定します。
+     *
+     * フィールドの説明: [import文作成のために検索するtmpディレクトリをカンマ区切りで指定します。指定ディレクトリ直下のvalueobjectディレクトリとrestgenratorディレクトリの下にxmlを探しにいきます。]。
+     *
+     * @param argSearchTmpdir フィールド[searchTmpdir]に設定する値。
+     */
+    public void setSearchTmpdir(final String argSearchTmpdir) {
+        fSearchTmpdir = argSearchTmpdir;
+    }
+
+    /**
+     * フィールド [searchTmpdir] の値を取得します。
+     *
+     * フィールドの説明: [import文作成のために検索するtmpディレクトリをカンマ区切りで指定します。指定ディレクトリ直下のvalueobjectディレクトリとrestgenratorディレクトリの下にxmlを探しにいきます。]。
+     * デフォルト: [tmp]。
+     *
+     * @return フィールド[searchTmpdir]から取得した値。
+     */
+    public String getSearchTmpdir() {
+        return fSearchTmpdir;
+    }
+
+    /**
+     * フィールド [voPackageSuffix] の値を設定します。
+     *
+     * フィールドの説明: [packageを探しにいくValueObject定義書を処理する際に指定されていたはずの packageSuffix を指定します。]。
+     *
+     * @param argVoPackageSuffix フィールド[voPackageSuffix]に設定する値。
+     */
+    public void setVoPackageSuffix(final String argVoPackageSuffix) {
+        fVoPackageSuffix = argVoPackageSuffix;
+    }
+
+    /**
+     * フィールド [voPackageSuffix] の値を取得します。
+     *
+     * フィールドの説明: [packageを探しにいくValueObject定義書を処理する際に指定されていたはずの packageSuffix を指定します。]。
+     *
+     * @return フィールド[voPackageSuffix]から取得した値。
+     */
+    public String getVoPackageSuffix() {
+        return fVoPackageSuffix;
+    }
+
+    /**
+     * フィールド [voOverridePackage] の値を設定します。
+     *
+     * フィールドの説明: [packageを探しにいくValueObject定義書を処理する際に指定されていたはずの overridePackage を指定します。]。
+     *
+     * @param argVoOverridePackage フィールド[voOverridePackage]に設定する値。
+     */
+    public void setVoOverridePackage(final String argVoOverridePackage) {
+        fVoOverridePackage = argVoOverridePackage;
+    }
+
+    /**
+     * フィールド [voOverridePackage] の値を取得します。
+     *
+     * フィールドの説明: [packageを探しにいくValueObject定義書を処理する際に指定されていたはずの overridePackage を指定します。]。
+     *
+     * @return フィールド[voOverridePackage]から取得した値。
+     */
+    public String getVoOverridePackage() {
+        return fVoOverridePackage;
+    }
+
+    /**
+     * フィールド [restPackageSuffix] の値を設定します。
+     *
+     * フィールドの説明: [API定義書で指定されたパッケージ名の後ろに追加するパッケージ文字列を指定します。]。
+     *
+     * @param argRestPackageSuffix フィールド[restPackageSuffix]に設定する値。
+     */
+    public void setRestPackageSuffix(final String argRestPackageSuffix) {
+        fRestPackageSuffix = argRestPackageSuffix;
+    }
+
+    /**
+     * フィールド [restPackageSuffix] の値を取得します。
+     *
+     * フィールドの説明: [API定義書で指定されたパッケージ名の後ろに追加するパッケージ文字列を指定します。]。
+     *
+     * @return フィールド[restPackageSuffix]から取得した値。
+     */
+    public String getRestPackageSuffix() {
+        return fRestPackageSuffix;
+    }
+
+    /**
+     * フィールド [restOverridePackage] の値を設定します。
+     *
+     * フィールドの説明: [API定義書で指定されたパッケージ名を上書きします。]。
+     *
+     * @param argRestOverridePackage フィールド[restOverridePackage]に設定する値。
+     */
+    public void setRestOverridePackage(final String argRestOverridePackage) {
+        fRestOverridePackage = argRestOverridePackage;
+    }
+
+    /**
+     * フィールド [restOverridePackage] の値を取得します。
+     *
+     * フィールドの説明: [API定義書で指定されたパッケージ名を上書きします。]。
+     *
+     * @return フィールド[restOverridePackage]から取得した値。
+     */
+    public String getRestOverridePackage() {
+        return fRestOverridePackage;
+    }
+
+    /**
+     * フィールド [restOverrideLocation] の値を設定します。
+     *
+     * フィールドの説明: [API定義書で指定されたロケーション名を上書きします。]。
+     *
+     * @param argRestOverrideLocation フィールド[restOverrideLocation]に設定する値。
+     */
+    public void setRestOverrideLocation(final String argRestOverrideLocation) {
+        fRestOverrideLocation = argRestOverrideLocation;
+    }
+
+    /**
+     * フィールド [restOverrideLocation] の値を取得します。
+     *
+     * フィールドの説明: [API定義書で指定されたロケーション名を上書きします。]。
+     *
+     * @return フィールド[restOverrideLocation]から取得した値。
+     */
+    public String getRestOverrideLocation() {
+        return fRestOverrideLocation;
+    }
+
+    /**
      * Gets the string representation of this value object.
      *
      * <P>Precautions for use</P>
@@ -491,6 +667,12 @@ public class BlancoTypeReferenceKtProcessInput {
         buf.append(",mapKeyType=" + fMapKeyType);
         buf.append(",valueObjectMetadirs=" + fValueObjectMetadirs);
         buf.append(",restgeneratorMetadirs=" + fRestgeneratorMetadirs);
+        buf.append(",searchTmpdir=" + fSearchTmpdir);
+        buf.append(",voPackageSuffix=" + fVoPackageSuffix);
+        buf.append(",voOverridePackage=" + fVoOverridePackage);
+        buf.append(",restPackageSuffix=" + fRestPackageSuffix);
+        buf.append(",restOverridePackage=" + fRestOverridePackage);
+        buf.append(",restOverrideLocation=" + fRestOverrideLocation);
         buf.append("]");
         return buf.toString();
     }
@@ -558,5 +740,23 @@ public class BlancoTypeReferenceKtProcessInput {
         // Name: fRestgeneratorMetadirs
         // Type: java.lang.String
         target.fRestgeneratorMetadirs = this.fRestgeneratorMetadirs;
+        // Name: fSearchTmpdir
+        // Type: java.lang.String
+        target.fSearchTmpdir = this.fSearchTmpdir;
+        // Name: fVoPackageSuffix
+        // Type: java.lang.String
+        target.fVoPackageSuffix = this.fVoPackageSuffix;
+        // Name: fVoOverridePackage
+        // Type: java.lang.String
+        target.fVoOverridePackage = this.fVoOverridePackage;
+        // Name: fRestPackageSuffix
+        // Type: java.lang.String
+        target.fRestPackageSuffix = this.fRestPackageSuffix;
+        // Name: fRestOverridePackage
+        // Type: java.lang.String
+        target.fRestOverridePackage = this.fRestOverridePackage;
+        // Name: fRestOverrideLocation
+        // Type: java.lang.String
+        target.fRestOverrideLocation = this.fRestOverrideLocation;
     }
 }

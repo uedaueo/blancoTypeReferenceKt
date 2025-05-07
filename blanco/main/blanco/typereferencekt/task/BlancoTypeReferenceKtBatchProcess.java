@@ -81,6 +81,18 @@ public class BlancoTypeReferenceKtBatchProcess {
                 input.setValueObjectMetadirs(arg.substring(21));
             } else if (arg.startsWith("-restgeneratorMetadirs=")) {
                 input.setRestgeneratorMetadirs(arg.substring(23));
+            } else if (arg.startsWith("-searchTmpdir=")) {
+                input.setSearchTmpdir(arg.substring(14));
+            } else if (arg.startsWith("-voPackageSuffix=")) {
+                input.setVoPackageSuffix(arg.substring(17));
+            } else if (arg.startsWith("-voOverridePackage=")) {
+                input.setVoOverridePackage(arg.substring(19));
+            } else if (arg.startsWith("-restPackageSuffix=")) {
+                input.setRestPackageSuffix(arg.substring(19));
+            } else if (arg.startsWith("-restOverridePackage=")) {
+                input.setRestOverridePackage(arg.substring(21));
+            } else if (arg.startsWith("-restOverrideLocation=")) {
+                input.setRestOverrideLocation(arg.substring(22));
             } else if (arg.equals("-?") || arg.equals("-help")) {
                 usage();
                 System.exit(END_SUCCESS);
@@ -174,7 +186,7 @@ public class BlancoTypeReferenceKtBatchProcess {
      */
     public static final void usage() {
         System.out.println("BlancoTypeReferenceKtBatchProcess: Usage:");
-        System.out.println("  java blanco.typereferencekt.task.BlancoTypeReferenceKtBatchProcess -verbose=value1 -metadir=value2 -targetdir=value3 -tmpdir=value4 -encoding=value5 -xmlrootelement=value6 -sheetType=value7 -targetStyle=value8 -lineSeparator=value9 -packageName=value10 -className=value11 -mapName=value12 -mapKeyType=value13 -valueObjectMetadirs=value14 -restgeneratorMetadirs=value15");
+        System.out.println("  java blanco.typereferencekt.task.BlancoTypeReferenceKtBatchProcess -verbose=value1 -metadir=value2 -targetdir=value3 -tmpdir=value4 -encoding=value5 -xmlrootelement=value6 -sheetType=value7 -targetStyle=value8 -lineSeparator=value9 -packageName=value10 -className=value11 -mapName=value12 -mapKeyType=value13 -valueObjectMetadirs=value14 -restgeneratorMetadirs=value15 -searchTmpdir=value16 -voPackageSuffix=value17 -voOverridePackage=value18 -restPackageSuffix=value19 -restOverridePackage=value20 -restOverrideLocation=value21");
         System.out.println("    -verbose");
         System.out.println("      explanation[Whether to run in verbose mode.]");
         System.out.println("      type[boolean]");
@@ -231,6 +243,25 @@ public class BlancoTypeReferenceKtBatchProcess {
         System.out.println("      type[string]");
         System.out.println("    -restgeneratorMetadirs");
         System.out.println("      explanation[restgeneratorのmetaディレクトリを指定します。複数ある場合はカンマで区切ります。]");
+        System.out.println("      type[string]");
+        System.out.println("    -searchTmpdir");
+        System.out.println("      explanation[import文作成のために検索するtmpディレクトリをカンマ区切りで指定します。指定ディレクトリ直下のvalueobjectディレクトリとrestgenratorディレクトリの下にxmlを探しにいきます。]");
+        System.out.println("      type[string]");
+        System.out.println("      default value[tmp]");
+        System.out.println("    -voPackageSuffix");
+        System.out.println("      explanation[packageを探しにいくValueObject定義書を処理する際に指定されていたはずの packageSuffix を指定します。]");
+        System.out.println("      type[string]");
+        System.out.println("    -voOverridePackage");
+        System.out.println("      explanation[packageを探しにいくValueObject定義書を処理する際に指定されていたはずの overridePackage を指定します。]");
+        System.out.println("      type[string]");
+        System.out.println("    -restPackageSuffix");
+        System.out.println("      explanation[API定義書で指定されたパッケージ名の後ろに追加するパッケージ文字列を指定します。]");
+        System.out.println("      type[string]");
+        System.out.println("    -restOverridePackage");
+        System.out.println("      explanation[API定義書で指定されたパッケージ名を上書きします。]");
+        System.out.println("      type[string]");
+        System.out.println("    -restOverrideLocation");
+        System.out.println("      explanation[API定義書で指定されたロケーション名を上書きします。]");
         System.out.println("      type[string]");
         System.out.println("    -? , -help");
         System.out.println("      explanation[show the usage.]");

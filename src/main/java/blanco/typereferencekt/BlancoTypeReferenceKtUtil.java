@@ -3,6 +3,8 @@ package blanco.typereferencekt;
 import blanco.cg.BlancoCgSupportedLang;
 import blanco.restgeneratorkt.BlancoRestGeneratorKtMeta2Xml;
 import blanco.typereferencekt.message.BlancoTypeReferenceKtMessage;
+import blanco.typereferencekt.task.valueobject.BlancoTypeReferenceKtProcessInput;
+import blanco.typereferencekt.valueobject.BlancoTypeReferenceKtClassStructure;
 import blanco.valueobjectkt.BlancoValueObjectKtConstants;
 import blanco.valueobjectkt.BlancoValueObjectKtMeta2Xml;
 import blanco.valueobjectkt.resourcebundle.BlancoValueObjectKtResourceBundle;
@@ -47,6 +49,12 @@ public class BlancoTypeReferenceKtUtil {
     public static Boolean isSerdeable = false;
     public static Boolean isIgnoreUnknown = false;
     public static Boolean isNullableAnnotation = false;
+
+    public static String voPackageSuffix = null;
+    public static String voPackageOverride = null;
+    public static String restPackageSuffix = null;
+    public static String restPackageOverride = null;
+
     public static String packageName = "blanco.typereference";
     public static String typeRefereceClassName = "BlancoTypeReference";
     public static String typeReferenceMapSuffix = "Map";
@@ -72,9 +80,20 @@ public class BlancoTypeReferenceKtUtil {
         }
     }
 
+    public static String searchImport(final String argTypeName, List<BlancoTypeReferenceKtClassStructure> argStructureList) {
+        String importStr = null;
+
+        for (BlancoTypeReferenceKtClassStructure structure : argStructureList) {
+            if (argTypeName != null && argTypeName.trim().equals(structure.getName().trim())) {
+                importStr = structure.getPackage().trim() + "." + structure.getName().trim();
+            }
+        }
+        return importStr;
+    }
+
 //    public static Map<String, String> processValueObjects(final BlancoTypeReferenceKtProcessInput input) {
 //        if (isVerbose) {
-//            System.out.println("BlancoValueObjectKtUtil : processValueObjects start !");
+//            System.out.println("BlancoTypeReferenceKtUtil : processValueObjects start !");
 //        }
 //
 //        /* tmpdir is unique. */

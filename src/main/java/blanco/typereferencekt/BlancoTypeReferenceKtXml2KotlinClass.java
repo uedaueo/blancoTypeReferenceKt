@@ -77,24 +77,6 @@ public class BlancoTypeReferenceKtXml2KotlinClass {
         return this.fVerbose;
     }
 
-    /*
-     * Settings for overriding package name.
-     */
-    private String fPackageSuffix = "";
-    public void setPackageSuffix(String suffix) {
-        this.fPackageSuffix = suffix;
-    }
-    public String getPackageSuffix() {
-        return this.fPackageSuffix;
-    }
-    private String fOverridePackage = "";
-    public void setOverridePackage(String overridePackage) {
-        this.fOverridePackage = overridePackage;
-    }
-    public String getOverridePackage() {
-        return this.fOverridePackage;
-    }
-
     /**
      * A factory for blancoCg to be used internally.
      */
@@ -138,30 +120,8 @@ public class BlancoTypeReferenceKtXml2KotlinClass {
             final File[] argRestMetaXmlSourceFiles,
             final File argDirectoryTarget) throws IOException {
 
-
-
-        // valueobject parser
-        BlancoValueObjectKtXmlParser voParser = new BlancoValueObjectKtXmlParser();
-        voParser.setVerbose(this.isVerbose());
-        voParser.setPackageSuffix(this.fPackageSuffix);
-        voParser.setOverridePackage(this.fOverridePackage);
-
-        List<BlancoValueObjectKtClassStructure> voStructureList = new ArrayList<>();
-        for (int index = 0; index < argVoMetaXmlSourceFiles.length; index++) {
-            if (argVoMetaXmlSourceFiles[index].getName().endsWith(".xml") == false) {
-                continue;
-            }
-            BlancoValueObjectKtClassStructure[] structures = voParser.parse(argVoMetaXmlSourceFiles[index]);
-            if (structures != null && structures.length > 0) {
-                voStructureList.addAll(new ArrayList<>(Arrays.asList(structures)));
-            }
-        }
-
-
         BlancoTypeReferenceKtXmlParser parser = new BlancoTypeReferenceKtXmlParser();
         parser.setVerbose(this.isVerbose());
-        parser.setPackageSuffix(this.fPackageSuffix);
-        parser.setOverridePackage(this.fOverridePackage);
         final List<BlancoTypeReferenceKtClassStructure> structures = parser.parse(argVoMetaXmlSourceFiles, argRestMetaXmlSourceFiles);
 
         /* Generate TypeReference Class */
@@ -169,7 +129,7 @@ public class BlancoTypeReferenceKtXml2KotlinClass {
 
         /* Generate TypeReference Maps */
         for (BlancoTypeReferenceKtClassStructure structure : structures) {
-            generateTypeReferenceMap(structure, argDirectoryTarget);
+            generateTypeReferenceMap(structure, structures, argDirectoryTarget);
         }
 
         /* Generate Class to TypeReference Map */
@@ -253,6 +213,7 @@ public class BlancoTypeReferenceKtXml2KotlinClass {
 
     private void generateTypeReferenceMap(
             final BlancoTypeReferenceKtClassStructure argStructure,
+            final List<BlancoTypeReferenceKtClassStructure> argStructureList,
             final File argDirectoryTarget
     ) {
         /*
@@ -278,11 +239,11 @@ public class BlancoTypeReferenceKtXml2KotlinClass {
         // Replaces the package name if the Replace option is specified.
         // If Suffix is present, it takes precedence.
         String myPackage = argStructure.getPackage();
-        if (argStructure.getPackageSuffix() != null && argStructure.getPackageSuffix().length() > 0) {
-            myPackage = myPackage + "." + argStructure.getPackageSuffix();
-        } else if (argStructure.getOverridePackage() != null && argStructure.getOverridePackage().length() > 0) {
-            myPackage = argStructure.getOverridePackage();
-        }
+//        if (argStructure.getPackageSuffix() != null && argStructure.getPackageSuffix().length() > 0) {
+//            myPackage = myPackage + "." + argStructure.getPackageSuffix();
+//        } else if (argStructure.getOverridePackage() != null && argStructure.getOverridePackage().length() > 0) {
+//            myPackage = argStructure.getOverridePackage();
+//        }
 
         fCgSourceFile = fCgFactory.createSourceFile(myPackage, null);
         fCgSourceFile.setEncoding(fEncoding);
@@ -335,7 +296,7 @@ public class BlancoTypeReferenceKtXml2KotlinClass {
                 defaultValue.append(",\n");
             }
             // generate map
-            String reference = buildMap(argStructure, fieldStructure, virtualParamsList);
+            String reference = buildMap(fieldStructure, argStructureList, virtualParamsList);
             defaultValue.append(reference);
         }
         defaultValue.append(")");
@@ -368,8 +329,8 @@ public class BlancoTypeReferenceKtXml2KotlinClass {
     }
 
     private String buildMap(
-            BlancoTypeReferenceKtClassStructure argClassStructure,
             BlancoValueObjectKtFieldStructure argFieldStructure,
+            List<BlancoTypeReferenceKtClassStructure> argClassStructureList,
             List<String> virtualParamsList
     ) {
         StringBuffer line = new StringBuffer();
@@ -404,6 +365,12 @@ public class BlancoTypeReferenceKtXml2KotlinClass {
         }
         line.append("\"").append(name).append("\" to ").append(BlancoTypeReferenceKtUtil.typeRefereceClassName).append("(type = ").append(typeRaw).append("::class.java");
 
+        /* import type if necessary */
+        String importStr = BlancoTypeReferenceKtUtil.searchImport(typeRaw, argClassStructureList);
+        if (!BlancoStringUtil.null2Blank(importStr).isEmpty()) {
+            fCgSourceFile.getImportList().add(importStr);
+        }
+
         BlancoCgField tmpField = fCgFactory.createField("tmpField", typeRaw, "");
         String generics = argFieldStructure.getGenericKt();
         if (BlancoStringUtil.null2Blank(generics).isEmpty()) {
@@ -413,7 +380,7 @@ public class BlancoTypeReferenceKtXml2KotlinClass {
         BlancoCgType tmpType = BlancoCgSourceUtil.parseTypeWithGenerics(tmpField.getType());
         List<BlancoCgType> genericsTree = tmpType.getGenericsTree();
         if (!genericsTree.isEmpty()) {
-            String nextGenerics = buildGenerics(genericsTree, virtualParamsList);
+            String nextGenerics = buildGenerics(genericsTree, argClassStructureList, virtualParamsList);
             line.append(", generics = ").append(nextGenerics);
         }
 
@@ -425,7 +392,10 @@ public class BlancoTypeReferenceKtXml2KotlinClass {
         return line.toString();
     }
 
-    private String buildGenerics(List<BlancoCgType> argTypeWithGenerics, List<String> virtualParamList) {
+    private String buildGenerics(
+            List<BlancoCgType> argTypeWithGenerics,
+            List<BlancoTypeReferenceKtClassStructure> argClassStructureList,
+            List<String> virtualParamList) {
         StringBuffer line = new StringBuffer();
         line.append("mutableListOf(\n");
 
@@ -446,8 +416,14 @@ public class BlancoTypeReferenceKtXml2KotlinClass {
             line.append(BlancoTypeReferenceKtUtil.typeRefereceClassName).append("(type = ").append(myType).append("::class.java");
             List<BlancoCgType> nextGenericsTree = type.getGenericsTree();
 
+            /* import type if necessary */
+            String importStr = BlancoTypeReferenceKtUtil.searchImport(myType, argClassStructureList);
+            if (!BlancoStringUtil.null2Blank(importStr).isEmpty()) {
+                fCgSourceFile.getImportList().add(importStr);
+            }
+
             if (!nextGenericsTree.isEmpty()) {
-                String nextGenerics = buildGenerics(nextGenericsTree, virtualParamList);
+                String nextGenerics = buildGenerics(nextGenericsTree, argClassStructureList, virtualParamList);
                 line.append(", generics = ").append(nextGenerics);
             }
 
