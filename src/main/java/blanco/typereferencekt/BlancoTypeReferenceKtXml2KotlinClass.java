@@ -541,7 +541,7 @@ public class BlancoTypeReferenceKtXml2KotlinClass {
         String value = mapClassName + "." + BlancoTypeReferenceKtUtil.typeReferenceMethod;
         fCgSourceFile.getImportList().add(fullMapClassName);
         if (argIsKeyTypeClass) {
-            key = mapClassName + "::class.java";
+            key = className + "::class.java";
             fCgSourceFile.getImportList().add(fullClassName);
         }
 
